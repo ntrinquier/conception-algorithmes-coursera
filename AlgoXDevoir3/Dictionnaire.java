@@ -22,7 +22,7 @@ public class Dictionnaire {
         	if (s.length() == pos) {     
                 for (Noeud fils : noeud.fils)
                 	if (fils.c == '*')
-                		return true;
+                		return false;
                 break;
         	}
         	
@@ -44,7 +44,7 @@ public class Dictionnaire {
 
         noeud.ajouteFils(new Noeud('*'));
         
-        return false;
+        return true;
     }
     
     public boolean estPrefixe(String s) {
@@ -102,7 +102,6 @@ class Noeud {
     }
     
     public boolean existeMotRecursif(String s, int pos) {
-    	//System.out.println("pos: "+pos+"/"+s.length()+" - "+c);
     	if (s.length() == pos) {
         	for (Noeud noeud : fils) {
             	if (noeud.c == '*')
@@ -112,7 +111,6 @@ class Noeud {
     	}
 
     	for (Noeud noeud : fils) {
-        	//System.out.println("char: "+noeud.c+"/"+s.charAt(pos));
         	if (noeud.c == s.charAt(pos))
         		return noeud.existeMotRecursif(s, pos+1);
     	}
