@@ -1,165 +1,161 @@
-import java.util.LinkedList;
-import java.util.Collection;
-import java.util.Arrays;
+class Test {
 
-public class Test {
-	public static Ville[] villes;
-	public static LinkedList<Integer>[] voisins;
+  // Cette fonction résout la grille donnée dans le sujet. Vous pourrez la
+  // lancer par curiosité, une fois le sujet terminé, elle ne donne pas de
+  // points.
+  public static void test() {
+    int[][] tab2 = {{0,0,1,0,0,0,0,0,0},{0,3,0,0,0,0,0,0,0},
+          {7,0,0,0,4,0,0,0,0},{0,0,0,0,0,0,0,0,0},
+          {0,0,0,0,0,0,0,0,5},{0,0,0,0,0,0,0,0,0},
+          {0,0,0,0,0,0,0,0,0},{0,0,2,0,0,0,0,0,0},
+          {0,0,0,0,0,0,7,0,0}};
+    int[][] tab = {{9,0,3,0,0,0,0,0,8},{0,6,0,0,0,0,0,1,0},
+          {0,5,0,2,0,0,0,9,0},{0,0,0,1,6,4,5,0,2},
+          {0,0,0,0,3,0,0,0,0},{6,0,1,5,8,7,0,0,0},
+          {0,4,0,0,0,6,0,8,0},{0,8,0,0,0,0,0,2,0},
+          {2,0,0,0,0,0,3,0,7}};
+    Sudoku s = new Sudoku(tab2);
+    System.out.println(s.resousGrille());
+    System.out.println();
+    System.out.println(s.solutionUnique());
+    s.afficheGrille();
+  }
 
-	// pour charger les cartes
-	static Carte carte;
-	//static final String chemin ="./"; // data file location
-	static final String chemin ="D:\\Documents\\workspace\\AlgoXDevoir6\\src\\"; // data file location
-	Carte ens = new Carte(chemin+"mf.txt");
+  // Premier test : votre fonction "verifieLigne"
+  public static void test1() {
+    System.out.println("test1");
+    int[][] tab = {{0,0,1,0,0,0,0,0,0},{0,3,0,0,0,0,0,0,0},
+          {7,0,0,0,4,0,0,7,0},{0,0,0,0,0,0,0,0,0},
+          {0,0,0,0,0,0,0,0,5},{0,0,0,0,0,0,0,0,0},
+          {0,0,0,0,0,0,0,0,0},{0,0,2,0,0,2,0,0,0},
+          {0,0,0,0,0,0,7,0,0}};
+    Sudoku s = new Sudoku(tab);
+    for (int i = 0; i < 9; i++) {
+      System.out.println(s.verifieLigne(i));
+    }
+    System.out.println("end");
+  }
 
-	// variables qui serviront au test
-	public static int v1, v2, v3, v4, v5;
+  // Deuxième test : votre fonction "verifieColonne"
+  public static void test2() {
+    System.out.println("test2");
+    int[][] tab = {{9,0,3,0,0,0,0,0,8},{0,6,0,0,0,0,0,1,0},
+          {0,5,0,2,0,0,0,9,0},{0,0,0,1,6,4,5,0,2},
+          {0,0,0,0,3,0,0,0,0},{6,0,1,5,8,7,0,0,0},
+          {9,4,0,0,0,6,0,8,2},{0,8,0,0,0,0,0,2,0},
+          {2,0,0,0,0,0,3,0,7}};
+    Sudoku s = new Sudoku(tab);
+    for (int i = 0; i < 9; i++) {
+      System.out.println(s.verifieColonne(i));
+    }
+    System.out.println("end");
+  }
 
-	static void construitGraphe(Collection<Ville> cv, double minDist) {
-		int n = cv.size(), k;
-		double R = 6371000;
-		double latDist = minDist * 180.0 / Math.PI / R;
-		Ville v, w;
+  // Troisième test : votre fonction "verifieCarre"
+  public static void test3() {
+    System.out.println("test3");
+     int[][] tab = {{9,0,3,0,0,0,0,0,8},{0,6,0,0,0,0,8,1,0},
+          {0,5,9,2,0,0,0,9,0},{0,0,0,1,6,4,5,0,2},
+          {0,0,0,0,3,0,0,0,0},{6,0,1,5,8,7,0,0,0},
+          {0,4,0,0,0,6,2,8,0},{0,8,0,0,0,0,0,2,0},
+          {2,0,0,0,0,0,3,0,7}};
+    Sudoku s = new Sudoku(tab);
+    for (int i = 0; i < 9; i++) {
+      for(int j = 0; j < 9; j++) {
+        System.out.println(s.verifieCarre(i,j));
+      }
+    }
+    System.out.println("end");
+  }
+  
+  // Peut-on remplir la case (i, j) avec la valeur k ?
+  public static void test4() {
+    System.out.println("test4");
+     int[][] tab = {{9,0,3,0,0,0,0,0,8},{0,6,0,0,0,0,0,1,0},
+          {0,5,0,2,0,0,0,9,0},{0,0,0,1,6,4,5,0,2},
+          {0,0,0,0,3,0,0,0,0},{6,0,1,5,8,7,0,0,0},
+          {0,4,0,0,0,6,0,8,0},{0,8,0,0,0,0,0,2,0},
+          {2,0,0,0,0,0,3,0,7}};
+    Sudoku s = new Sudoku(tab);
+    for (int i = 0; i < 9; i++) {
+      for(int j = 0; j < 9; j++) {
+        for(int k = 1; k <= 9; k++) {
+          System.out.print(s.verifiePossible(i,j,k)+",");
+        }
+      }
+    }
+    System.out.println("end");
+  }
 
-		Test.villes = new Ville[n];
-		Test.voisins = new LinkedList[n];
+  // Résolution complète de quelques grilles.
+  public static void test5() {
+    System.out.println("test5");
 
-		k = 0;
-		for (Ville ville : cv) {
-			Test.villes[k] = ville;
-			Test.voisins[k++] = new LinkedList<Integer>();
-		}
+    int[][] t = {{2 ,1 ,3 ,4 ,5 ,6 ,7 ,0 ,0 },{0 ,0 ,6 ,0 ,0 ,9 ,1 ,0 ,3 },{9 ,8 ,7 ,1 ,0 ,3 ,0 ,5 ,0 },{1 ,0 ,4 ,3 ,7 ,0 ,0 ,8 ,9 },{3 ,0 ,8 ,0 ,9 ,0 ,0 ,0 ,0 },{0 ,9 ,5 ,6 ,4 ,0 ,0 ,3 ,1 },{5 ,0 ,9 ,0 ,1 ,0 ,0 ,0 ,2 },{8 ,3 ,1 ,5 ,6 ,2 ,9 ,7 ,0 },{6 ,7 ,2 ,9 ,3 ,0 ,0 ,0 ,5 }};
+    Sudoku s = new Sudoku(t);
+    s.resousGrille();
+    s.afficheGrille();
+    System.out.println();
 
-		Arrays.sort(Test.villes);
+    int[][] t2 = {{0 ,0 ,3 ,0 ,0 ,7 ,0 ,4 ,9 },{6 ,0 ,8 ,1 ,9 ,4 ,0 ,0 ,0 },{4 ,0 ,5 ,2 ,0 ,0 ,0 ,6 ,7 },{2 ,1 ,0 ,3 ,5 ,6 ,0 ,0 ,0 },{3 ,0 ,7 ,0 ,0 ,9 ,6 ,0 ,2 },{9 ,0 ,6 ,0 ,1 ,0 ,3 ,0 ,4 },{0 ,4 ,0 ,8 ,2 ,0 ,9 ,0 ,6 },{0 ,6 ,2 ,0 ,4 ,0 ,5 ,0 ,3 },{0 ,0 ,0 ,0 ,7 ,0 ,4 ,0 ,1 }};
+    Sudoku s2 = new Sudoku(t2);
+    s2.resousGrille();
+    s2.afficheGrille();
+    System.out.println();
 
-		for (int i = 0; i < n; i++) {
-			v = Test.villes[i];
-			for (int j = i+1; j < n; j++) {
-				w = Test.villes[j];
-				if (w.getLatitude()-v.getLatitude() > latDist) {
-					break;
-				}
-				if (v.distance(w) <= minDist) {
-					Test.voisins[i].add(j);
-					Test.voisins[j].add(i);
-				}
-			}
-		}
-	}
+    int[][] t3 = {{1 ,0 ,0 ,0 ,0 ,0 ,0 ,9 ,5 },{0 ,0 ,6 ,1 ,0 ,8 ,0 ,0 ,7 },{0 ,8 ,9 ,0 ,0 ,0 ,4 ,0 ,6 },{4 ,0 ,1 ,5 ,0 ,0 ,0 ,0 ,9 },{0 ,0 ,7 ,0 ,1 ,0 ,3 ,6 ,4 },{0 ,9 ,8 ,3 ,0 ,4 ,0 ,0 ,1 },{0 ,1 ,0 ,6 ,5 ,2 ,9 ,7 ,0 },{3 ,7 ,5 ,0 ,8 ,1 ,6 ,0 ,0 },{0 ,6 ,2 ,7 ,4 ,0 ,1 ,5 ,0 }};        
+    Sudoku s3 = new Sudoku(t3);
+    s3.resousGrille();
+    s3.afficheGrille();
+    System.out.println();
 
-	public static int compteCC(Ville[] villes, LinkedList<Integer>[] voisins) {
-		boolean[] visited = new boolean[villes.length];
-		int nbCC = 0;
+    int[][] t4 = {{0 ,3 ,4 ,0 ,5 ,0 ,6 ,8 ,7 },{5 ,6 ,7 ,4 ,2 ,0 ,9 ,1 ,3 },{1 ,8 ,0 ,3 ,6 ,7 ,0 ,4 ,5 },{3 ,0 ,0 ,5 ,0 ,0 ,0 ,7 ,9 },{0 ,5 ,8 ,0 ,0 ,2 ,1 ,3 ,6 },{7 ,0 ,6 ,8 ,1 ,3 ,0 ,5 ,0 },{6 ,0 ,0 ,2 ,8 ,1 ,0 ,0 ,0 },{8 ,2 ,5 ,9 ,3 ,4 ,7 ,6 ,1 },{9 ,4 ,1 ,0 ,7 ,0 ,0 ,2 ,8 }};        
+    Sudoku s4 = new Sudoku(t4);
+    s4.resousGrille();
+    s4.afficheGrille();
+    System.out.println();
 
-		for (int i = 0; i < visited.length; i++) {
-			if (!visited[i]) {
-				dfs(voisins, visited, i);
-				nbCC++;
-			}
-		}
+    int[][] t5 = {{1 ,2 ,0 ,5 ,4 ,7 ,0 ,8 ,9 },{5 ,4 ,7 ,8 ,9 ,6 ,1 ,3 ,2 },{6 ,0 ,0 ,1 ,0 ,0 ,0 ,5 ,0 },{2 ,1 ,0 ,3 ,0 ,0 ,7 ,0 ,4 },{0 ,6 ,4 ,0 ,0 ,9 ,0 ,1 ,8 },{7 ,0 ,8 ,2 ,0 ,4 ,3 ,0 ,5 },{8 ,3 ,0 ,0 ,7 ,5 ,0 ,4 ,0 },{0 ,7 ,6 ,9 ,8 ,0 ,5 ,2 ,0 },{9 ,5 ,1 ,4 ,3 ,2 ,8 ,7 ,6 }};        
+    Sudoku s5 = new Sudoku(t5);
+    s5.resousGrille();
+    s5.afficheGrille();
 
-		return nbCC;
-	}
+    System.out.println("end");
+  }
+  
+  // Solutions uniques, ou pas ?
+  public static void test6() {
+    System.out.println("test6");
+    int[][] t = {{2 ,3 ,0 ,0 ,5 ,6 ,0 ,0 ,0 },{0 ,7 ,8 ,4 ,3 ,0 ,1 ,0 ,6 },{0 ,9 ,1 ,2 ,0 ,7 ,0 ,4 ,0 },{0 ,2 ,3 ,0 ,7 ,0 ,6 ,0 ,8 },{4 ,0 ,6 ,3 ,9 ,8 ,2 ,0 ,7 },{0 ,8 ,0 ,6 ,1 ,0 ,0 ,0 ,0 },{3 ,1 ,2 ,0 ,0 ,5 ,9 ,0 ,4 },{0 ,0 ,0 ,0 ,0 ,0 ,5 ,6 ,1 },{9 ,6 ,0 ,0 ,0 ,0 ,8 ,0 ,2 }};
+    Sudoku s = new Sudoku(t);
+    System.out.println(s.solutionUnique());
 
-	private static void dfs(LinkedList<Integer>[] voisins, boolean[] visited, int i) {
-		visited[i] = true;
-		for (Integer j : voisins[i]) {
-			if (!visited[j]) {
-				dfs(voisins, visited, j);
-			}
-		}
-	}
+    int[][] t2 = {{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,6 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,6 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,3 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,3 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,7 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 }};
+    Sudoku s2 = new Sudoku(t2);
+    System.out.println(s2.solutionUnique());
+    
+    int[][] t3 = {{0 ,0 ,0 ,0 ,0 ,9 ,7 ,0 ,5 },{4 ,0 ,0 ,1 ,0 ,0 ,0 ,9 ,0 },{0 ,7 ,8 ,2 ,3 ,5 ,0 ,4 ,6 },{2 ,0 ,0 ,7 ,4 ,0 ,0 ,0 ,0 },{7 ,0 ,5 ,0 ,0 ,0 ,3 ,6 ,0 },{6 ,0 ,0 ,0 ,5 ,0 ,0 ,1 ,0 },{0 ,0 ,1 ,5 ,0 ,0 ,9 ,0 ,0 },{0 ,2 ,4 ,0 ,8 ,7 ,6 ,0 ,0 },{8 ,9 ,0 ,0 ,1 ,3 ,0 ,2 ,0 }};
+    Sudoku s3 = new Sudoku(t3);
+    System.out.println(s3.solutionUnique());
 
-	public static boolean relie(Ville[] villes, LinkedList<Integer>[] voisins, int v1, int v2) {
-		boolean[] added = new boolean[villes.length];
-		LinkedList<Integer> toExplore = new LinkedList<Integer>();
-		toExplore.addLast(v1);
-		added[v1] = true;
-		while (!toExplore.isEmpty()) {
-			int i = toExplore.poll();
-			for (Integer j : voisins[i]) {
-				if (j == v2) {
-					return true;
-				}
-				if (!added[j]) {
-					toExplore.addLast(j);
-					added[j] = true;
-				}
-			}
-		}
-		return false;
-	}
+    
+    int[][] t4 = {{1 ,0 ,3 ,0 ,4 ,0 ,7 ,0 ,0 },{0 ,0 ,0 ,1 ,9 ,7 ,2 ,8 ,0 },{7 ,8 ,9 ,0 ,3 ,6 ,0 ,0 ,0 },{2 ,0 ,0 ,4 ,7 ,0 ,0 ,9 ,0 },{0 ,6 ,0 ,9 ,1 ,2 ,0 ,0 ,7 },{9 ,7 ,0 ,0 ,6 ,5 ,3 ,1 ,0 },{0 ,3 ,0 ,7 ,5 ,0 ,6 ,0 ,0 },{4 ,5 ,0 ,6 ,0 ,1 ,9 ,0 ,0 },{0 ,9 ,0 ,0 ,8 ,4 ,5 ,7 ,1 }};
+    Sudoku s4 = new Sudoku(t4);
+    System.out.println(s4.solutionUnique());
 
-	// trouve l'indice de la premiere ville nommee
-	static int premiereVille(String s) {
-		for (int i = 0; i<villes.length; i++)
-			if (s.equals(villes[i].getNom())) return (i);
-		return(-1);
-	}
+    int[][] t5 = {{0 ,0 ,0 ,0 ,0 ,0 ,0 ,2 ,0 },{0 ,0 ,8 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,2 ,0 ,0 ,0 ,7 ,0 ,0 },{8 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,6 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 },{0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 }};
+    Sudoku s5 = new Sudoku(t5);
+    System.out.println(s5.solutionUnique());
+    
+    System.out.println("end");
+  }
 
-	public static void initMayotte(double minDist){
-		Carte ens = new Carte(chemin+"mf.txt");
-		construitGraphe(ens.villes(), minDist);
-	}
-
-	public static void initFrance(double minDist){
-		Carte ens = new Carte(chemin+"fr.txt");
-		construitGraphe(ens.villes(), minDist);
-	}
-
-	// cette fonction teste vos fonctions sur Mayotte
-	public static void test1(double minDist) {
-		System.out.println("Mayotte, pas de "+(int)minDist);
-		initMayotte(minDist);
-
-		v1 = premiereVille("Accua") ;
-		v2 = premiereVille("Moutsamoudou");
-		v3 = premiereVille("Bandraboua");
-		v4 = premiereVille("Mambutzou");
-
-
-		System.out.println("nb composantes : "+compteCC(villes, voisins));
-		System.out.println(relie(villes, voisins, v1, v2));
-		System.out.println(relie(villes, voisins, v1, v3));
-		System.out.println(relie(villes, voisins, v2, v3));
-		System.out.println(relie(villes, voisins, v2, v4));
-	}
-
-
-	// cette fonction teste vos fonctions sur la France
-	// construitGraphe peut prendre du temps s'il n'est pas optimise
-	// par ailleurs, on doit sans doute augmenter la taille de la pile
-
-	public static void test2(double minDist) {
-
-		System.out.println("France, pas de "+minDist);
-		initFrance(minDist);
-		System.out.println("composantes : "+compteCC(villes, voisins));
-
-		v1 = premiereVille("Paris") ;
-		v2 = premiereVille("Rouen");
-		v3 = premiereVille("Ajaccio");
-		v4 = premiereVille("Narbonne");
-		v5 = premiereVille("La Testa");
-		System.out.println(relie(villes, voisins, v1, v2));
-		System.out.println(relie(villes, voisins, v1, v3));
-		System.out.println(relie(villes, voisins, v1, v4));
-		System.out.println(relie(villes, voisins, v3, v5));
-		System.out.println(relie(villes, voisins, v1, v5));
-	}
-
-	public static void main (String[] args) {
-		test1(1850);
-		test1(2000);
-		test1(3000);
-		test1(3400);
-		test1(4000);
-
-		// tests sur la carte de France
-		// peuvent etre longs voire demander d'augmenter la taille de la pile
-		test2(2000);
-		test2(5000);
-		test2(7000);
-		test2(12000);
-	}
-}
+  public static void main(String a[]) {
+    //test1();
+    //test2();
+    //test3();
+    //test4();
+    //test5();
+    test6();
+  }
+}  
